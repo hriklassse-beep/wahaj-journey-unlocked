@@ -15,14 +15,18 @@ export function WahajExperience() {
   const [completed, setCompleted] = useState<StageId[]>([]);
   const [active, setActive] = useState<StageId>("W");
   const [celebration, setCelebration] = useState(false);
+  const [checkpointFor, setCheckpointFor] = useState<StageId | null>(null);
 
   const allDone = completed.length === STAGES.length;
   const stage = useMemo(() => STAGES.find((s) => s.id === active)!, [active]);
   const stageIdx = STAGES.findIndex((s) => s.id === active);
 
+  // Challenge finished → open checkpoint instead of completing immediately.
+  const openCheckpoint = (id: StageId) => setCheckpointFor(id);
+
   const complete = (id: StageId) => {
+    setCheckpointFor(null);
     setCompleted((c) => (c.includes(id) ? c : [...c, id]));
-    // celebration ping
     setCelebration(true);
     setTimeout(() => setCelebration(false), 1400);
     const next = STAGES[STAGES.findIndex((s) => s.id === id) + 1];
