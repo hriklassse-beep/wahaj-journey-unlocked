@@ -9,6 +9,7 @@ import { HarnessChallenge } from "./challenges/HarnessChallenge";
 import { AssemblyChallenge } from "./challenges/AssemblyChallenge";
 import { JourneyChallenge } from "./challenges/JourneyChallenge";
 import { cn } from "@/lib/utils";
+import { StageCheckpoint } from "./StageCheckpoint";
 
 export function WahajExperience() {
   const [completed, setCompleted] = useState<StageId[]>([]);
