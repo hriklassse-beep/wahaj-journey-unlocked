@@ -131,14 +131,26 @@ export function WahajExperience() {
 
               <div className="relative mt-8 rounded-2xl border border-border bg-white/70 p-5 md:p-6">
                 <div className="font-display mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary/70">
-                  <span className="size-1.5 rounded-full bg-primary" /> التحدي التفاعلي
+                  <span className={cn("size-1.5 rounded-full", checkpointFor === stage.id ? "bg-secondary" : "bg-primary")} />
+                  {checkpointFor === stage.id ? "نقطة تحقّق · تراثنا الأصيل" : "التحدي التفاعلي"}
                 </div>
-                {stage.id === "W" && <WonderChallenge onDone={() => complete("W")} />}
-                {stage.id === "A1" && <AnalyseChallenge onDone={() => complete("A1")} />}
-                {stage.id === "H" && <HarnessChallenge onDone={() => complete("H")} />}
-                {stage.id === "A2" && <AssemblyChallenge onDone={() => complete("A2")} />}
-                {stage.id === "J" && <JourneyChallenge onDone={() => complete("J")} />}
+                {checkpointFor === stage.id ? (
+                  <StageCheckpoint
+                    stageId={stage.id}
+                    onPass={() => complete(stage.id)}
+                    onRetryChallenge={() => setCheckpointFor(null)}
+                  />
+                ) : (
+                  <>
+                    {stage.id === "W" && <WonderChallenge onDone={() => openCheckpoint("W")} />}
+                    {stage.id === "A1" && <AnalyseChallenge onDone={() => openCheckpoint("A1")} />}
+                    {stage.id === "H" && <HarnessChallenge onDone={() => openCheckpoint("H")} />}
+                    {stage.id === "A2" && <AssemblyChallenge onDone={() => openCheckpoint("A2")} />}
+                    {stage.id === "J" && <JourneyChallenge onDone={() => openCheckpoint("J")} />}
+                  </>
+                )}
               </div>
+
 
               {/* Real case */}
               <div className="relative mt-6 flex items-start gap-3 rounded-2xl border border-secondary/25 bg-secondary-soft/60 p-4">
